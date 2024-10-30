@@ -5,10 +5,10 @@
  */
 import got from 'got';
 import { pick } from 'lodash';
-import { shouldCompress } from './shouldCompress.js';
-import { redirect } from './redirect.js';
-import { compress } from './compress.js';
-import { copyHeaders } from './copyHeaders.js';
+import shouldCompress from './shouldCompress.js';
+import redirect from './redirect.js';
+import compress from './compress.js';
+import copyHeaders from './copyHeaders.js';
 
 export default async function proxy(req, res) {
   /*
