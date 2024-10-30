@@ -5,7 +5,7 @@
   "version": "1.0.1",
   "description": "Data compression service",
   "author": "MYNAME",
-  "license": "",
+  "license": "Mozilla Public License 2.0",
   "scripts": {
     "start": "node server.js"
   },
