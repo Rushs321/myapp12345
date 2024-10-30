@@ -1,0 +1,21 @@
+{
+  "name": "node-app-version",
+  "main": "server.js",
+  "private": true,
+  "version": "1.0.1",
+  "description": "Data compression service",
+  "author": "MYNAME",
+  "license": "",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "got": "11.8.6",
+    "express": "4.21.1",
+    "lodash": "4.17.21",
+    "sharp": "0.33.5",
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
