@@ -10,6 +10,9 @@ import shouldCompress from "./shouldCompress.js";
 import redirect from "./redirect.js";
 import compress from "./compress.js";
 import copyHeaders from "./copyHeaders.js";
+import { CookieJar } from "tough-cookie";
+
+const cookieJar = new CookieJar();
 
 const { pick } = _;
 
@@ -32,9 +35,16 @@ export default async function proxy(req, res) {
       "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.3",
     },
     maxRedirects: 4,
-  //  followRedirect: false, // We handle redirects manually
+   followRedirect: false, // We handle redirects manually
+      https: {
+        rejectUnauthorized: false,
+      },
+      cookieJar,
+      timeout: {
+        response: 6600 // ms
+      }
  //   throwHttpErrors: false, // We handle errors based on status code
-    retry: { limit: 2 }, // Optionally, define retry limits (if needed)
+ //   retry: { limit: 2 }, // Optionally, define retry limits (if needed)
 //    timeout: { request: 10000 }
   };
     
