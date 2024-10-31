@@ -25,18 +25,19 @@ export default function compress(req, res, input) {
       .toFormat(format, {
         quality: req.params.quality
       })
-      .toBuffer((err, output, info) => _sendResponse(err, output, info, format, req, res))
+      .toBuffer((err, output, info) => {
+        if (err || !info) {
+          redirect(req, res);
+          return;
+        }
+
+        res.setHeader('content-type', 'image/' + format);
+        res.setHeader('content-length', info.size);
+        res.setHeader('x-original-size', req.params.originSize);
+        res.setHeader('x-bytes-saved', req.params.originSize - info.size);
+        res.status(200);
+        res.write(output);
+        res.end();
+      })
   );
-}
-
-function _sendResponse(err, output, info, format, req, res) {
-  if (err || !info) return redirect(req, res);
-
-  res.setHeader('content-type', 'image/' + format);
-  res.setHeader('content-length', info.size);
-  res.setHeader('x-original-size', req.params.originSize);
-  res.setHeader('x-bytes-saved', req.params.originSize - info.size);
-  res.status(200);
-  res.write(output);
-  res.end();
 }
