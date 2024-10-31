@@ -6,6 +6,7 @@
 import sharp from 'sharp';
 import redirect from './redirect.js';
 sharp.cache(false);
+sharp.concurrency(0);
 
 const sharpStream = () => sharp({ unlimited: true });
 
