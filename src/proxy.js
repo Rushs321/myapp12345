@@ -22,22 +22,22 @@ export default async function proxy(req, res) {
   )
     return redirect(req, res);
   
-  
-
-  try {
-    const url = req.params.url;
+  const url = req.params.url;
   const options = {
     headers: {
       ...pick(req.headers, ["cookie", "dnt", "referer", "range"]),
       "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.3",
     },
-      maxRedirects: 4,
+      maxRedirects: 4
   //   followRedirect: false, // We handle redirects manually
   //    throwHttpErrors: false, // We handle errors based on status code
   //    retry: { limit: 2 }, // Optionally, define retry limits (if needed)
   //    timeout: { request: 10000 },
    //   decompress: false
   };
+
+  try {
+    
     
     let origin = got.stream(url, options);
 
