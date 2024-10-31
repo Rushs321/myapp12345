@@ -39,7 +39,7 @@ export default async function proxy(req, res) {
     };
 
     // Using got.stream to initiate the request and stream data
-    const origin = got.stream(req.params.url, options);
+    let origin = await got.stream(req.params.url, options);
 
     // Stream event listeners
     origin.on("response", (response) => {
