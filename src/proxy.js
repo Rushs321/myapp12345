@@ -13,6 +13,7 @@ import copyHeaders from "./copyHeaders.js";
 
 const { pick } = _;
 
+
 export default async function proxy(req, res) {
   /*
    * Avoid loopback that could cause server hang.
@@ -28,24 +29,24 @@ export default async function proxy(req, res) {
       ...pick(req.headers, ["cookie", "dnt", "referer", "range"]),
       "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.3",
     },
-      maxRedirects: 4
-  //   followRedirect: false, // We handle redirects manually
-  //    throwHttpErrors: false, // We handle errors based on status code
-  //    retry: { limit: 2 }, // Optionally, define retry limits (if needed)
-  //    timeout: { request: 10000 },
-   //   decompress: false
+    maxRedirects: 4,
+    followRedirect: false, // We handle redirects manually
+    throwHttpErrors: false, // We handle errors based on status code
+    retry: { limit: 2 }, // Optionally, define retry limits (if needed)
+    timeout: { request: 10000 }
   };
 
   try {
-    
-    
-    let origin = got.stream(url, options);
+    let origin = await got.stream(url, options);
 
     origin.on('response', (originResponse) => {
-      if (originResponse.statusCode >= 400 || (originResponse.statusCode >= 300 && originResponse.headers.location)) {
-        // Redirect if status is 4xx or redirect location is present
-        return redirect(req, res);
-      }
+      
+    if (originResponse.statusCode >= 400)
+    return redirect(req, res);
+
+  // handle redirects
+  if (originResponse.statusCode >= 300 && originResponse.headers.location)
+    return redirect(req, res);
 
       // Copy headers to response
       copyHeaders(originResponse, res);
