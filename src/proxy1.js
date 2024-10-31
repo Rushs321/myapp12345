@@ -34,7 +34,8 @@ export default async function proxy(req, res) {
       throwHttpErrors: false, // We handle errors based on status code
       retry: { limit: 2 }, // Optionally, define retry limits (if needed)
       timeout: { request: 10000 },
-      http2: true
+      http2: true,
+      decompress: true
     };
 
     // Using got.stream to initiate the request and stream data
